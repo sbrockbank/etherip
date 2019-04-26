@@ -368,7 +368,7 @@ final public class CIPData
 
     /** @return String representation for debugging */
     @Override
-    final synchronized public String toString()
+    final  public String toString() 
     {
         final StringBuilder result = new StringBuilder();
         result.append("CIP_").append(this.type).append(": ");
@@ -449,5 +449,33 @@ final public class CIPData
             result.append("Unknown Type " + this.type);
         }
         return result.toString();
+    }
+
+    /**
+     * Returns the data member
+     *
+     * return ByteBuffer data
+     *            {@link ByteBuffer} where data should be placed
+     */
+    /**Added by Simon Brockbank */
+    final synchronized public ByteBuffer getData(){
+    	return this.data;
+    }
+    
+    /**
+     * Returns the data member as a String, using the Robovic format
+     *
+     * return ByteBuffer data
+     *            {@link ByteBuffer} where data should be placed
+     */
+    /**Added by Simon Brockbank */
+    final synchronized public String getRobovicString(){
+        final int len = this.data.getInt(2);
+        final byte[] chars = new byte[len];
+        for (int i = 0; i < len; ++i)
+        {
+            chars[i] = this.data.get(6 + i);
+        }
+        return new String(chars);
     }
 }
